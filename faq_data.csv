@@ -1,0 +1,9 @@
+intent,question,response
+admission_query,"How can I apply for B.Tech admission?","You can apply online through our admission portal on the college website."
+admission_query,"What is the last date for admission?","Admissions close on July 31st every year."
+course_info,"What courses do you offer?","We offer B.Tech, MBA, MCA, and BBA programs."
+fee_info,"What is the hostel fee?","Hostel fee is ₹50,000 per year including food."
+fee_info,"How much is the MBA course fee?","The MBA course fee is ₹1,20,000 per year."
+faculty_info,"Who is the head of the Computer Science department?","Dr. Ramesh Patel is the HOD of Computer Science."
+contact_info,"How can I contact the college?","You can reach us at contact@college.edu or call 080-12345678."
+location_info,"Where is the college located?","Our college is located in Bengaluru, Karnataka."
