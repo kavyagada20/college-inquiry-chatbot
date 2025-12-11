@@ -1,0 +1,23 @@
+# Virtual environments
+.venv/
+venv/
+
+# Python cache and bytecode
+__pycache__/
+*.pyc
+
+# IDE/editor settings
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+
+# Environment files
+.env
+
+# Model or large binary files
+models/
+
+# Logs and temporary files
+*.log
