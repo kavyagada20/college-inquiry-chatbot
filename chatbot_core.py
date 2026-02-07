@@ -1,17 +1,36 @@
+import os
 import pickle
 import spacy
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-# Load model and vectorizer
-intent_model = pickle.load(open("models/intent_model.pkl", "rb"))
-vectorizer = pickle.load(open("models/vectorizer.pkl", "rb"))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Load spaCy NER model
-nlp = spacy.load("en_core_web_sm")
+MODEL_DIR = os.path.join(BASE_DIR, "models")
+INTENT_MODEL_PATH = os.path.join(MODEL_DIR, "intent_model.pkl")
+VECTORIZER_PATH = os.path.join(MODEL_DIR, "vectorizer.pkl")
+
+# Load ML artifacts safely
+intent_model = None
+vectorizer = None
+
+if os.path.exists(INTENT_MODEL_PATH) and os.path.exists(VECTORIZER_PATH):
+    intent_model = pickle.load(open(INTENT_MODEL_PATH, "rb"))
+    vectorizer = pickle.load(open(VECTORIZER_PATH, "rb"))
+else:
+    print("⚠️ ML model files not found. Running in fallback mode.")
+
+# Load spaCy model safely
+try:
+    nlp = spacy.load("en_core_web_sm")
+except Exception:
+    nlp = None
+    print("⚠️ spaCy model not available.")
 
 # Load FAQ data
-faq_data = pd.read_csv("data/faq_data.csv")
+faq_path = os.path.join(BASE_DIR, "data", "faq_data.csv")
+faq_data = pd.read_csv(faq_path)
+
 
 def predict_intent(user_input):
     X = vectorizer.transform([user_input])
@@ -58,3 +77,4 @@ if __name__ == "__main__":
             break
         output = get_chatbot_response(user_input)
         print(f"Bot ({output['intent']}): {output['response']}")
+
