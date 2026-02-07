@@ -28,7 +28,7 @@ except Exception:
     print("⚠️ spaCy model not available.")
 
 # Load FAQ data
-faq_path = os.path.join(BASE_DIR, "data", "faq_data.csv")
+faq_path = os.path.join(BASE_DIR, "faq_data.csv")
 faq_data = pd.read_csv(faq_path)
 
 
@@ -79,5 +79,6 @@ if __name__ == "__main__":
             break
         output = get_chatbot_response(user_input)
         print(f"Bot ({output['intent']}): {output['response']}")
+
 
 
