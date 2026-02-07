@@ -17,7 +17,7 @@ __pycache__/
 .env
 
 # Model or large binary files
-models/
+# models/
 
 # Logs and temporary files
 *.log
