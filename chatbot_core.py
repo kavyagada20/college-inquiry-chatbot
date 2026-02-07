@@ -45,15 +45,19 @@ def extract_entities(user_input):
     return [(ent.text, ent.label_) for ent in doc.ents]
 
 def retrieve_response(user_input, intent):
-    # Filter FAQs with same intent
     subset = faq_data[faq_data['intent'] == intent]
 
-    # Use TF-IDF + cosine similarity to find closest question
+    # Fallback if intent not found
+    if subset.empty:
+        return "Sorry, I couldn’t find an exact answer. Please contact the college office for more details."
+
     user_vec = vectorizer.transform([user_input])
     faq_vecs = vectorizer.transform(subset['question'])
     sims = cosine_similarity(user_vec, faq_vecs)
     idx = sims.argmax()
     return subset.iloc[idx]['response']
+
+
 
 def get_chatbot_response(user_input):
     intent = predict_intent(user_input)
@@ -79,6 +83,7 @@ if __name__ == "__main__":
             break
         output = get_chatbot_response(user_input)
         print(f"Bot ({output['intent']}): {output['response']}")
+
 
 
 
