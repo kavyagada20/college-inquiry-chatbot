@@ -33,14 +33,16 @@ faq_data = pd.read_csv(faq_path)
 
 
 def predict_intent(user_input):
+    if intent_model is None or vectorizer is None:
+        return "general_query"
     X = vectorizer.transform([user_input])
-    intent = intent_model.predict(X)[0]
-    return intent
+    return intent_model.predict(X)[0]
 
 def extract_entities(user_input):
+    if nlp is None:
+        return []
     doc = nlp(user_input)
-    entities = [(ent.text, ent.label_) for ent in doc.ents]
-    return entities
+    return [(ent.text, ent.label_) for ent in doc.ents]
 
 def retrieve_response(user_input, intent):
     # Filter FAQs with same intent
@@ -77,4 +79,5 @@ if __name__ == "__main__":
             break
         output = get_chatbot_response(user_input)
         print(f"Bot ({output['intent']}): {output['response']}")
+
 
